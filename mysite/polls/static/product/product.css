@@ -1,0 +1,90 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 250px;
+    margin: auto;
+    /* text-align: center; */
+    font-family: arial;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 18px;
+  }
+  .outer{
+      width:100%;
+      
+  }
+  .in{
+      margin-left:20px;
+      display: inline-block;
+  }
+
+  
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  
+  /* .btn-like {
+    border:0;
+  } */
+  /* .btn-like:hover {
+    background-color:red;
+  } */
+  /* .btn-like.done {
+    background-color: red;
+    
+  }
+  .btn-like.done:hover {
+    background-color: transparent;
+    
+  } */
+  .btn-like{
+    border:0;
+    border-radius: 16px;
+    /* background-color: white; */
+  }
+.container3{
+    display:grid;
+    grid-gap:30px;
+    grid-template-columns: repeat(auto-fit,500px);
+  }
+  .container {
+    overflow: hidden;
+  }
+  
+  .filterDiv {
+    float: left;
+    background-color: #2196F3;
+    color: #ffffff;
+    width: 100px;
+    line-height: 100px;
+    text-align: center;
+    margin: 2px;
+    display: none; /* Hidden by default */
+  }
+  
+  /* The "show" class is added to the filtered elements */
+  .show {
+    display: block;
+  }
+  
+  /* Style the buttons */
+  .category {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Add a light grey background on mouse-over */
+  .category:hover {
+    background-color: #ddd;
+  }
+  
+  /* Add a dark background to the active button */
+  .category.active {
+    background-color: #666;
+    color: white;
+  }

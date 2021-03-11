@@ -1,0 +1,127 @@
+{% extends 'polls/head.html' %}
+
+{%block content%}
+
+
+
+
+{%load static%}
+<link rel="stylesheet" href="{% static 'report/admin_report.css'%}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c85d62c8b6.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+<div class = "home-container">
+    <div class="admin-title">
+      <div style="padding:10px;background-color: dodgerblue;"><h3 style="color:white">User Management<h3></div>
+    </div>
+    <div id="myBtnContainer">
+     <div style="height:38px;padding-bottom:5px;border-bottom: 3px solid; width:100%; display:block;">
+            <div><span><strong style="font-weight:400;font-size:24px; padding-left:4px;padding-right:20px;">Admin > <span style="font-size:18px">Reported</span></strong><span style="color:blue;font-size:15px">(User : {{reported_user}})</span></span></div>
+        </div>
+    
+    </div>
+    
+        <div class="home-card">
+        {%for reported in reported%}
+        
+        <div style="margin-left:10px;width:660px">
+        <h5 style="font-weight:400">Report Content{%if reported.reply == 1 %}<span style="color:red"> ( Answer Completed )</span>{%endif%}</h5>
+                <table style="width:660px;font-weight:500"class="table table-bordered">
+                                
+                                <tbody>
+                                <tr>
+                                    <th ><span style="font-weight:400">Product ID</span></th>
+                                    
+                                    <td style="width:500px"><a href="#"data-toggle="modal" data-target="#exampleModalCenter{{reported.prod_id_id}}">{{reported.prod_id_id}}</a></td>
+                                    {%for my_product in my_product%}
+                                    {%if reported.prod_id_id == my_product.prod_id%}
+                                    <div class="modal fade" id="exampleModalCenter{{reported.prod_id_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Product Info</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <div class="card" style="box-shadow: 0 4px 8px 0 powderblue;border-bottom-right-radius:20px; border-bottom-left-radius:20px;width : 270px;height:430px">
+                                                <img src="{{ my_product.img.url }}" alt="Denim Jeans" style="width:100%; height:220px;"/>
+                                                <div class="card-body">
+                                                <div>
+                                                    <span style="font-size: 18px;font-weight: 500; float:up;"class="card-title" >{{my_product.prod_name}}</span>
+                                                    <span style="font-size:12px; color:grey; float:right">{{my_product.likey}}</span>
+                                                    <i id="icon-{{my_product.prod_id}}"style="color:red; float:right; padding-top : 5px;padding-right:5px"class="far fa-heart fa-1x"></i>
+                                                    
+                                                    
+                                                </div>
+                                                {%if my_product.sold %}
+                                                <span class="card-text"style ="color: red;" id="sold">Sold Out  </span>
+                                                {% else %}
+                                                <span class="card-text"style ="margin-right:5px;color: red;" id="bidding">Bidding...  </span>
+                                                {% endif %}
+                                                <span class="card-text"aligh="right" class="price"style ="color: grey"> {{my_product.current_price}} $</span>
+                                                
+                                                <div style="font-size: 15px; font-weight: 500;"class="card-text" id="place">{{my_product.place}}</div>
+                                                <div style="font-size: 13px; font-weight: 400;"class="card-text" style="padding-bottom:10px" id="phone">{{my_product.phone}}</div>
+                                                <div style="font-size:13px;font-weight: 400;"class="card-text"aligh="right" class="price"> Start : {{my_product.bid_start}}</div>
+                                                <div style="font-size:13px;font-weight: 400;"class="card-text"aligh="right" class="price">/ End : {{my_product.bid_end}}</div>
+                                                <button style="font-size: 15px;background-color:black; width: 100%; margin-top:10px;border:0;border-radius:20px; color:white"id="history" data-toggle="modal" data-target="#exampleModalCenter{{my_product.prod_id}}"><span style="padding-right:10px">Auction History</span><i class="fa fa-history"></i></button>
+                                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    {%endif%}
+                                    {%endfor%}
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Product Name</span></th>
+                                    <td style="width:500px">{{reported.prod_name}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Title</span></th>
+                                    <td style="width:500px">{{reported.title}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Writer</span></th>
+                                    <td style="width:500px">{{reported.user_id_id}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Content</span></th>
+                                    <td style="width:500px;height:100%">{{reported.content}}</td>
+                                    
+                                  </tr>
+                                  
+                                  
+                                </tbody>
+                                
+                              </table> 
+                                      {%if reported.reply == 1 %}
+                                      <button style="float:right;padding: 6px 8px; width: 80px; opacity: 0.9;" name="reply" value="{{reported.prod_id_id}}" class="btn btn-dark" disabled >Reply<i style="padding-left:7px; color:red"class="fas fa-times"></i></button>
+                                      {%else%}
+                                      <a href="/polls/admin/report/reply/{{reported.id}}" <button style="float:right;padding: 6px 8px; width: 80px; opacity: 0.9;" name="reply" value="{{reported.prod_id_id}}" class="btn btn-dark" >Reply</button></a>
+                                      {%endif%}
+                                       
+                                        
+                                       
+                                         
+        </div>
+        
+        {%endfor%}
+        
+        </div>
+       
+
+{%endblock%}

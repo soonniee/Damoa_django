@@ -1,0 +1,65 @@
+* {box-sizing: border-box;}
+
+/* Style the input container */
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Style the form icons */
+.icon,.fas {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+.error-msg{
+  margin-left:50px;
+}
+/* Style the input fields */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+.input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+/* .row{
+    grid-area: 4 / 2 / 5 /3;
+} */
+.signup-wrapper{
+    display:grid;
+    grid-row:500px;
+    grid-template-columns: 1fr 400px 1fr;
+    
+}
+.member-header{
+    grid-area: 1/ 2 / 2 / 3;
+}
+.local-login{
+  grid-area: 2/ 2 / 4 / 3;
+}

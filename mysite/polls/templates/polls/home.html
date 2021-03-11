@@ -1,0 +1,369 @@
+
+{% extends 'polls/nav.html' %}
+{%load custom_tags%}
+{%block home%}
+  <li class="nav-item"><a href="/polls/home/all" class="nav-link">Home</a></li>
+  <li class="nav-item"><a href="/polls/home/auction" class="nav-link">Auction</a></li>
+{%endblock%}
+{% block navbar %}
+{% if id %}
+
+  <ul class="nav bg-secondary">
+  <li style = "text-align:center; color:black; margin-top:8px;" class="nav-item-top">
+   Welcome   {{id}}
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/mypage/seller">MyPage</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/index/all">Logout</a>
+  </li>
+</ul>
+
+{% else %}
+
+  <ul class="nav bg-secondary">
+  <li class="nav-item-top">
+    <a class="nav-link active" href="#">Damoa First?</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/login">Login</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/signup">Sign Up</a>
+  </li>
+</ul>
+
+{% endif %}
+
+{% endblock %}
+{%block product%}
+
+
+
+
+{%load static%}
+<link rel="stylesheet" href="{% static 'home/home.css'%}">
+<div class = "home-container">
+    <div style="display:inline-block"class="filter-container">
+    <form method="post">{% csrf_token %}
+        
+        <button value="{{category}}"type="submit" name="latest"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Latest<span style="font-size:13px"> (최신순)</span></button>
+        <button value="{{category}}"type="submit" name="hot"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Hot<span style="font-size:13px"> (인기순)</span></button>
+        <button value="{{category}}"type="submit" name="last"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Last Minute<span style="font-size:13px"> (마감 임박순)</span></button>
+    </form>
+    </div>
+    <div class="filter-display-container">
+      <span style="font-size:18px;color:red">{{filter_display}}</span>
+    </div>
+    <div class="search-container">
+          <div class="sidenav">
+           <form action="" method="post" class="form-inline my-2 my-lg-0">
+              {% csrf_token %}
+          <h3 style="text-align:left; padding-top:50px;padding-bottom:15px;margin-left:20px;font-weight:bolder;"><strong>Search</strong></h3>
+          <h6 style="text-align:left; padding-bottom:15px;margin-left:20px;font-weight:bolder;"><strong>Category : <span style="color:blue;margin-left:6px;font-size:18px">{{category}}</span></strong></h6>
+          <h6 style="text-align:left; margin-left:20px;font-weight:bolder;"><strong>Seller</strong></h6>
+          <input style="border-radius:3px;border:1.5px solid;width:150px;margin-left:20px;margin-bottom:20px"type="text" name="seller_search" placeholder="Seller">
+          <h6 style="text-align:left; margin-left:20px;font-weight:bolder;"><strong>Product Name</strong></h6>
+          <input style="border-radius:3px;border:1.5px solid;width:150px;margin-left:20px;margin-bottom:20px"type="text" name="product_search" placeholder="Product Name">
+          <h6 style="text-align:left; margin-left:20px;font-weight:bolder"><strong>Price</strong></h6>
+          <select style="border-radius:3px;border:1.5px solid;height:30px;margin-left:20px;width:150px;"name="price_search">
+                      <option value = "0" hidden>Price</option>
+                      <option value = "1" >0 ~ 50$</option>
+                      <option value="2">50 ~ 100$</option>
+                      <option value="3">100 ~ 500$</option>
+                      <option value="4">500 ~ 1000$</option>
+                      <option value="5">1000 ~ 5000$</option>
+                      <option value="6">5000$ ~</option>
+                    </select>
+          <button name="search" value="{{category}}"style="float:right;margin-right:30px;margin-top:20px;padding: 4px 6px; width: 80px; opacity: 0.9;"class="btn btn-dark">Search</button>
+          
+          </div>
+      </div>
+    <div id="myBtnContainer" style="padding-bottom:10px;border-bottom: 3px solid; width:100%;">
+      {% comment %} <form action=""method="post" enctype="multipart/form-data"> {% endcomment %}
+      {% comment %} {% csrf_token %} {% endcomment %}
+      {%if category == 'All'%}
+      <button style="font-weight:600;margin-right:8px" class="category active"id="All"name="All" value="All"> All</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" id="All"name="All" value="All"> All</button>
+      {%endif%}
+      {%if category == 'IT'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" id="IT"name="IT"value="IT"> IT</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" id="IT"name="IT"value="IT"> IT</button>
+      {%endif%}
+      {%if category == 'Clothes'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Clothes"value="Clothes"> Clothes</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Clothes"value="Clothes"> Clothes</button>
+      {%endif%}
+      {%if category == 'Shoes'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Shoes"value="Shoes"> Shoes</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Shoes"value="Shoes"> Shoes</button>
+      {%endif%}
+      {%if category == 'Books'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Books"value="Books"> Books</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Books"value="Books"> Books</button>
+      {%endif%}
+      {%if category == 'Furniture'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Furniture"value="Furniture"> Furniture</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Furniture"value="Furniture"> Furniture</button>
+      {%endif%}
+      {%if category == 'Etc'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Etc"value="Etc"> Etc</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Etc"value="Etc"> Etc</button>
+      {%endif%}
+      
+      
+      
+      
+      
+      
+    </form>
+    
+    </div>
+    <div class="home-card">
+
+      
+      {%for list in prod%}
+      {% realtime as start_check%}
+      
+          {%if list.seller != id and list.bid_start < start_check%}
+          <div class="card" style="box-shadow: 0 4px 8px 0 powderblue;border-bottom-right-radius:20px; border-bottom-left-radius:20px;width : 300px; height:450px">
+            
+            <img src="{{ list.img.url }}" style="width:100%; height:220px;"/>
+            
+            <div class="card-body">
+            <div>
+              <span style="font-size: 18px;font-weight: 500;">{{list.prod_name}}</span><span id="count-{{ list.prod_id }}"style="font-size:12px; color:grey; float:right">{{list.likey}}</span>
+              <!-- <form method="post">
+                {% csrf_token %} -->
+                
+                
+                
+                
+                {%if list.prod_id in prod_list%}
+                 
+               
+               
+                <button name="press-unlike" style="float:right;border:none;outline:none;background-color: red;" id="{{list.prod_id}}" class="btn-like">
+                  <i id="icon-{{list.prod_id}}"style="color:white"class="far fa-heart fa-1x"></i>
+                </button>
+                
+                {%else%}
+                
+                <button name="press-unlike" style="float:right;border:none;outline:none;background-color: white;" id="{{list.prod_id}}" class="btn-like">
+                  <i id="icon-{{list.prod_id}}"style="color:grey"class="far fa-heart fa-1x"></i>
+                </button>
+                {%endif%}
+                
+                
+               
+                
+                
+                
+              <!-- </form> -->
+            </div>
+            <div>
+            {% realtime as time%}
+            
+            
+            
+            
+            {%if list.sold or list.bid_end < time%}
+              
+              <span style ="color: red;margin-right:5px;font-size: 15px;" class="sold">Sold Out  </span>
+              {% else %}
+              
+              <span style ="margin-right:5px;color: red;font-size: 15px;" class="sold">Bidding...  </span>
+            {% endif %}
+            <span aligh="right" class="price">{{list.current_price}} $</span>
+            </div>
+
+            
+            <div style="font-size: 14px; font-weight: 400;"class="place"> <a style="font-size:12px;color:black"class="map" name="{{list.prod_id}}"id="{{list.place}}"href="#"data-toggle="modal" data-target="#exampleModalCenter{{list.prod_id}}">{{list.place}}</a></div>
+            <!-- <div id="map" style="width:500px;height:300px;"></div> -->
+            <div class="modal fade" id="exampleModalCenter{{list.prod_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered " role="document">
+                  <div class="modal-content" style="width:100%">
+                      <div class="modal-header">
+                      <h4 class="modal-title" id="exampleModalLongTitle">Place Info<span style="font-size:12px;margin-left:10px">( {{list.place}} )</span></h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                        <div id="map{{list.prod_id}}" style="width:100%;height:300px;"></div> 
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: 14px; font-weight: 500;"class="seller">{{list.seller}} / {{list.phone}}
+            <span style="margin-left:10px;float:right"><a style="float:right; color: red" href="/polls/report/{{which}}/{{list.prod_id}}">Report</a></span>
+            <span style="float:right"><a style="float:right; color: black" href="/polls/counsel/{{which}}/{{list.prod_id}}">1:1문의</a></span></div>
+            <div style="background-color:black; margin-top:10px;width: 240px; border:0;border-radius:10px; color:white"id="end_date"><i style="margin-left:5px;margin-right:5px;"class="fa fa-history fa-1x "></i><span style="font-weight:500;font-size:15px">{{list.bid_end}}</span></div>
+            
+                <div style="padding-top:20px;width:100%">
+                  {%if not list.sold %}
+                    <div style="display: inline-block">
+                      <form style="display: inline-block;" action=""method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;" name="bidding" value="{{list.prod_id}}" class="btn btn-secondary">Bidding</button>
+                        
+                      
+                      
+                    </div>
+                    
+                    
+                  {% else %}
+                    <div style="display: inline-block">
+                      <button type="button" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled><span>Bidding  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                    </div>
+                  {% endif %}
+                  {%if not list.sold and not list.now %}
+                    <div style="display: inline-block">
+                      <button type="submit" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"name="buy_now" value="{{list.prod_id}}"class="btn btn-primary"onclick="return confirm('Buy Product?')"><span>Buy Now  </span><span style="font-size: 15px">$ {{list.now_price}}</span></button>
+                    </div>
+                  {% else %}
+                  
+                  <div style="display: inline-block">
+                    <button type="button" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"class="btn btn-primary" disabled><span>Buy Now  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                  
+                  </div>
+                  
+                  {% endif %}
+                  {%if not list.sold and not list.now %}
+                  <div style="display: inline-block">
+                      <button type="submit" style="padding: 6px 6px; width: 100%; opacity: 0.9;"name="add_cart" value="{{list.prod_id}}"class="btn btn-danger"onclick="return confirm('Add to Cart?')"><i style="color:white"class="fas fa-cart-plus fa-1x"></i></button>
+                    </div>
+                    {% endif %}
+                    </form>
+                </div>
+               
+            
+          </div>
+        </div>
+        {%endif%}
+        {%endfor%}
+        </div>
+        <div class="footer">
+          <div style="width:1450px;margin: 0 auto"class="footer-container">
+            <div style="display:flex;margin-bottom:5px;justify-content:space-between"class="footer-top">
+              <div class="web-logo" style="padding-top:10px;font-size:28px;">DAMOA<i style="color:skyblue" class="fab fa-opencart"></i></div>
+              
+            </div>
+            <div style="display:flex;justify-content:space-between;border-top: 2px solid rgba(255, 255, 255, 0.1);"class="footer-bottom">
+              <div style="margin-top:5px;font-size:15px;display:inline-block;vertical-align:center">Copyright &copy; 2020 All rights reserved </div>
+              <div style="margin-top:2px"><i class="fab fa-facebook-square fa-2x"></i>
+              <i style="margin-left:10px" class="fab fa-google-plus-square fa-2x"></i>
+              <i style="margin-left:10px;margin-right:5px" class="fab fa-instagram fa-2x"></i></div>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+       
+        <script>
+          $(".btn-like").click(function(){
+            var pk = $(this).attr('id');
+            
+            $.ajax({
+              type:"POST",
+              url : "/polls/home/{{which}}",
+              data:{'pk':pk,'csrfmiddlewaretoken': '{{ csrf_token }}'},
+              dataType:"json",
+              success:function(response){
+                var btn = $("#"+pk);
+                var icon = $("#icon-"+pk);
+                if(response.like == 1){
+                
+                  btn.css('background-color','red');
+                  icon.css('color','white');
+                  
+                  
+                }
+                else{
+                  
+                  btn.css('background-color','white');
+                  icon.css('color','grey');
+                  
+                  
+                }
+                //document.location.reload(true);
+                $("#count-"+pk).html(response.likes_count)
+              },
+              error:function(){
+
+              },
+            })
+          })
+          
+        </script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db67d2251911b514d0b6def8481ba4e0&libraries=services"></script>
+        <script>
+        
+          
+          $('.map').click(function(){
+            var b = $(this).attr('name');
+            var place = $(this).attr('id');
+            
+          $("#exampleModalCenter"+b).on('shown.bs.modal', function(){
+            
+            
+          var mapContainer = document.getElementById('map'+b), // 지도를 표시할 div 
+              mapOption = {
+                  center: new kakao.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+                  level: 5 // 지도의 확대 레벨
+              };  
+          
+          // 지도를 생성합니다    
+          var map = new kakao.maps.Map(mapContainer, mapOption); 
+          
+          // 주소-좌표 변환 객체를 생성합니다
+          var geocoder = new kakao.maps.services.Geocoder();
+          
+          // 주소로 좌표를 검색합니다
+          geocoder.addressSearch(place, function(result, status) {
+            console.log('success')
+            console.log(place)
+              // 정상적으로 검색이 완료됐으면 
+               if (status === kakao.maps.services.Status.OK) {
+          
+                  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          
+                  // 결과값으로 받은 위치를 마커로 표시합니다
+                  var marker = new kakao.maps.Marker({
+                      map: map,
+                      position: coords
+                  });
+                  
+                  // 인포윈도우로 장소에 대한 설명을 표시합니다
+                  var infowindow = new kakao.maps.InfoWindow({
+                      content: '<div style="width:150px;text-align:center;padding:6px 0;">Trading Place</div>'
+                  });
+                  infowindow.open(map, marker);
+                  
+                  // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                  map.setCenter(coords);
+              } 
+          });
+        })    
+      })
+      
+          </script>
+        <!-- <script src="//code.jquery.com/jquery.min.js"></script>
+<script>
+$(".btn-like").click(function() {
+	$(this).toggleClass("done");
+})
+</script> -->
+<script src="{% static 'home/home.js'%}"></script>
+{%endblock%}
+{%block register%}
+{% endblock %}

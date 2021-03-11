@@ -1,0 +1,65 @@
+{% extends 'polls/head.html' %}
+
+{% block content %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'polls/signup.css'%}">
+      <div class="signup-wrapper">
+        <div class="member-header">
+            <h1 class="member-logo" style="text-align:center; margin-top: 80px;">
+                <a href="/polls/index" style="color:black;">
+                    DAMOA<i style="color:skyblue" class="fab fa-opencart"></i>
+                </a>
+            </h1>
+        </div>
+        {% comment %} <div class="social-login">
+            <span class="naver-login">
+                <button class='btn-social-login' style='background:#1FC700'><i class="xi-2x xi-naver"></i></button><span style="padding:5px;">Register with Naver Account</span>
+            </span><br><br>
+            <span class="google-login">
+                <button class='btn-social-login' style='background:#D93025'><i class="xi-2x xi-google"></i></button><span style="padding:5px;">Register with Google Account</span>
+            </span>
+        </div> {% endcomment %}
+        <!-- <div class="row omb_row-sm-offset-3 omb_loginOr">
+			<div class="col-xs-12 col-sm-6">
+				<hr class="omb_hrOr">
+				<span class="omb_spanOr">or</span>
+			</div>
+		</div> -->
+        <div style="padding-top:60px"class="local-login">
+            <form method="post" action="">
+              {% csrf_token %}
+                <h2>Register Form</h2>
+                <div class="input-container">
+                  <i class="fas fa-smile"></i>
+                  <input class="input-field" type="text" placeholder="Name" name="usrnm">
+                </div>
+                <div class="input-container">
+                  <i class="fas fa-envelope"></i>
+                  <input class="input-field" type="text" placeholder="Email" name="email">
+                </div>
+                <div class="input-container">
+                  <i class="fa fa-user icon"></i>
+                  <input class="input-field" type="text" placeholder="ID" name="userid">
+                </div>
+
+
+
+                <div class="input-container">
+                  <i class="fa fa-key icon"></i>
+                  <input class="input-field" type="password" placeholder="Password" name="password">
+
+                </div>
+                <div class="input-container">
+                  <i class="fa fa-key icon"></i>
+                  <input class="input-field" type="password" placeholder="Repeat Password" name="password_re">
+
+                </div>
+                <section class="error-msg" style="color:red;"></section>
+                <div style="color:red;"> {% if error%}{{error}}{% endif %}</div>
+                <button type="submit" class="btn">Register</button>
+              </form>
+        </div>
+        </div>
+{% endblock %}
+  
+

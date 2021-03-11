@@ -1,0 +1,270 @@
+
+{% extends 'polls/nav.html' %}
+
+{%block home%}
+  <li class="nav-item"><a href="/polls/home/all" class="nav-link">Home</a></li>
+  <li class="nav-item"><a href="/polls/home/auction" class="nav-link">Auction</a></li>
+{%endblock%}
+{% block navbar %}
+{% if id %}
+
+  <ul class="nav bg-secondary">
+  <li style = "text-align:center; color:black; margin-top:8px;" class="nav-item-top">
+   Welcome   {{id}}
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/mypage/seller">MyPage</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/index/all">Logout</a>
+  </li>
+</ul>
+
+{% else %}
+
+  <ul class="nav bg-secondary">
+  <li class="nav-item-top">
+    <a class="nav-link active" href="#">Damoa First?</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/login">Login</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/signup">Sign Up</a>
+  </li>
+</ul>
+
+{% endif %}
+
+
+{% endblock %}
+{%block mypage%}
+{%load static%}
+<link rel="stylesheet" href="{% static 'mypage/mypage_edit.css'%}">
+<div class = "mypage-container">
+    <div>
+        <div class="sidenav">
+        <div style="padding-top:30px;padding-top:15px;font-size:35px;padding-bottom:20px;text-align:left; margin-left:6px;"><strong>MyPage</strong></div>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Selling</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/seller">- Registered Products</a>
+        <br>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Buying</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/shoppinglist">- Shopping List</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/wish">- Wish List</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/cart">- Cart <span style="font-size: 13px;">(Buy Now)</span></a>  
+        <br>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Services</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/report">- Report Contents</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/inquiry/buying">- 1:1 Inquiry (Buying)</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/inquiry/selling">- 1:1 Inquiry (Selling)</a>
+      </div>
+    </div>
+    <div class="product-container">
+    {%block mypage_product_title%}
+        <div style="height:45px; padding-bottom:40px;border-bottom: 3px solid; width:100%; display:block;">
+            <span><strong style="font-size:32px; padding-right:50px;">Selling -> Edit</strong><span style="color:blue;">Registered Products</span></span>
+        </div>
+    {%endblock%}
+        <div class="product-card">
+            <div class="card" style="box-shadow: 0 4px 8px 0 powderblue;border-bottom-right-radius:20px; border-bottom-left-radius:20px;width:300px;height:600px">
+                <img src="{{ my_product.img.url }}" alt="Denim Jeans" style="width:100%; height:220px;"/>
+                <div class="card-body">
+                  <div style="item-align:center">
+                    <span style="font-size:18px; font-weight: 500;float:up;"class="card-title" >{{my_product.prod_name}}</span>
+                    <span style="font-size:12px; color:grey; float:right">{{my_product.likey}}</span>
+                    <i id="icon-{{my_product.prod_id}}"style="color:red; float:right; padding-top : 5px;padding-right:5px"class="far fa-heart fa-1x"></i>
+                    
+                    
+                  </div>
+                
+                <span style="color:grey;font-size:16px;font-weight: 600;"class="card-text"aligh="right" class="price"> Start : {{my_product.price}} $</span>
+                <span style="font-size:14px;"class="card-text"aligh="right" class="price"> / Bid unit : {{my_product.bid_unit}} $</span>
+                <div style="font-size:14px;font-weight: 600;"class="card-text" class="place">{{my_product.place}}</div>
+                <div style="font-size:15px;font-weight: 500;"class="card-text" style="padding-bottom:10px" id="phone">{{my_product.seller}} / {{my_product.phone}}</div>
+                <div style="font-size:14px;font-weight: 400;"class="card-text"aligh="right" class="price"> Start : {{my_product.bid_start}}</div>
+                <div style="font-size:14px;font-weight: 400;"class="card-text"aligh="right" class="price">/ End : {{my_product.bid_end}}</div>
+                <div style="padding-top:20px;">
+                {%if not my_product.sold %}
+                    <div style="display: inline-block">
+                      <button type="button" style="padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled>Bidding</button>
+                    </div>
+                {% else %}
+                    <div style="display: inline-block">
+                      <button type="button" style="padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled>Bidding</button>
+                    </div>
+                  {% endif %}
+                  {%if not my_product.now %}
+                    <div style="display: inline-block">
+                      <button type="button" style="padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-primary"disabled><span>Buy Now  </span><span style="font-size: 15px">$ {{my_product.now_price}}</span></button>
+                    </div>
+                  {% else %}
+                  
+                  <div style="display: inline-block">
+                    <button type="button" style="padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-primary" disabled><span>Buy Now  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                  
+                  </div>
+                  {% endif %}
+                
+                </div>
+              </div>
+            </div>
+                    <div class="card" style="width:800px; height:620px;">
+                            <div style="height:45px;"class="card-header">
+                                <h5>Edit</h5>
+                            </div>
+                              
+                            <div class="card-body">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %} 
+                              <div style="display: inline-block;padding-right : 30px;"class="form-group">
+                                <label style="padding-bottom:15px"for="inputZip">Category</label>
+                                <div style="margin-left:35px;">
+                                  <select style="width:100px;"class="custom-select" name="category">
+                                    <option selected>Clothes</option>
+                                    <option value="IT">IT</option>
+                                    <option value="Shoes">Shoes</option>
+                                    <option value="Books">Books</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Etc">Etc</option>
+                                  </select>
+                              </div>
+                                  </div>
+                                  <div style="padding-right : 30px;display: inline-block"class="form-group">
+                                    <label for="inputEmail4">Product Name</label>
+                                    <input style="width:200px;"type="text" class="form-control" name="name" placeholder="Product Name">
+                                  </div>
+                                  
+                                <div style="display: inline-block;padding-right : 30px;" class="form-group">
+                                  <label for="inputAddress">Starting Price($)</label>
+                                  <input style="width:200px;"type="text" class="form-control" name="price" placeholder="Starting Price">
+                                  
+                                </div>
+                                <div style="display: inline-block" class="form-group">
+                                  <label style="padding-bottom:15px"for="inputAddress">Bid Unit($)</label>
+                                  <div style="margin-left:35px;">
+                                    <select style="width:100px;"class="custom-select" name="bid_unit">
+                                      <option selected>1</option>
+                                      <option value="5">5</option>
+                                      <option value="10">10</option>
+                                      <option value="50">50</option>
+                                      <option value="100">100</option>
+                                      <option value="500">500</option>
+                                      <option value="1000">1000</option>
+                                    </select>
+                                </div>
+                                  
+                                </div>
+                                
+                                <div style="padding-right : 20px;display: inline-block" class="form-group">
+                                  <label for="example-datetime-local-input" >Bid Start</label>
+                                  <input style="width:250px;" name="start"class="form-control" type="datetime-local"  id="example-datetime-local-input">
+                                  
+                                </div>
+                                <div style="display: inline-block" class="form-group">
+                                  <label for="example-datetime-local-input" >Bid End</label>
+                                    <input style="width:250px;"name="end"class="form-control" type="datetime-local"  id="example-datetime-local-input">
+                                  
+                                </div>
+
+                                <div style="display: inline-block;padding-right : 70px;"class="form-group">
+                                  <div>
+                                    <label for="inputAddress">Buy It Now</label>
+                                  </div>
+                                      <div style="margin-left:35px;"class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" id="possible" name="now" class="custom-control-input" value="possible">
+                                  <label class="custom-control-label" for="possible">Possible</label>
+                                  </div>
+                                  <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" id="impossible" name="now" class="custom-control-input" value="impossible">
+                                  <label class="custom-control-label" for="impossible">Impossible</label>
+                                  </div>
+                                </div>
+                                <div id = "now_input" class="form-group" style="display: none;">
+                                  <label id="now_title" for="inputAddress2">Buy It Now Price($)</label>
+                                  <input type="text" class="form-control" name="now_price" placeholder="Buy It Now Price">
+                                </div>
+                                <div style="width:500px;display: inline-block;padding-right:30px"class="form-group">
+                                  <label for="inputPassword4">Trading Place</label>
+                                  <input type="text" onclick="sample5_execDaumPostcode()" class="form-control" id="place"name="place" placeholder="Trading Place">
+                                  
+                                </div>
+
+                              <div style="width:200px;display: inline-block;"class="form-group">
+                                <label for="inputAddress">Phone Number</label>
+                                <input type="text" class="form-control" name="phone" placeholder="Phone Number">
+                              </div>
+
+                                
+                                <div style="margin-right:200px;width:450px;display:inline-block"class="form-group">
+                                  <label for="inputAddress2">Upload File</label>
+                                  <div style="margin-left:35px;">
+                                    <div class="custom-file">
+                                      <input type="file" class="custom-file-input" id="customFile" name="img">
+                                      <label class="custom-file-label" for="customFile"></label>
+                                    </div>
+                                  </div>
+                                </div>
+                            
+                            
+                            <button style="display:inline-block;"type="submit" class="btn btn-primary" name = "editProd" value="{{my_product.prod_id}}" onclick="return confirm('Complete?')">Complete</button>
+                            
+                              </div>
+                              
+                              
+                            
+                            </form>
+                          </div>
+        </div>
+    </div>
+   
+</div>
+<div class="footer">
+      <div style="width:1450px;margin: 0 auto"class="footer-container">
+        <div style="display:flex;margin-bottom:5px;justify-content:space-between"class="footer-top">
+          <div class="web-logo" style="padding-top:10px;font-size:28px;">DAMOA<i style="color:skyblue" class="fab fa-opencart"></i></div>
+          
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top: 2px solid rgba(255, 255, 255, 0.1);"class="footer-bottom">
+          <div style="margin-top:5px;font-size:15px;display:inline-block;vertical-align:center">Copyright &copy; 2020 All rights reserved </div>
+          <div style="margin-top:2px"><i class="fab fa-facebook-square fa-2x"></i>
+          <i style="margin-left:10px" class="fab fa-google-plus-square fa-2x"></i>
+          <i style="margin-left:10px;margin-right:5px" class="fab fa-instagram fa-2x"></i></div>
+        </div>
+        
+      </div>
+      
+    </div>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+  <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db67d2251911b514d0b6def8481ba4e0&libraries=services"></script>
+<script>
+  var mapContainer = document.getElementById('map'),
+  mapOption = {
+    center: new daum.maps.LatLng(37.537187, 127.005476),
+    level:5
+  };
+   var map = new daum.maps.Map(mapContainer, mapOption);
+   var geocoder = new daum.maps.services.Geocoder();
+    var marker = new daum.maps.Marker(
+    {
+       position: new daum.maps.LatLng(37.537187, 127.005476),
+       map: map
+     });
+     function sample5_execDaumPostcode() { new daum.Postcode({ oncomplete: function(data) {
+       var fullAddr = data.address;
+       var extraAddr = '';
+        if(data.addressType === 'R'){
+           if(data.bname !== ''){ extraAddr += data.bname; }
+            if(data.buildingName !== ''){ extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); }
+            fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); }
+            document.getElementById("place").value = fullAddr;
+            console.log(fullAddr)
+            
+             }
+           }).open();
+         }
+       </script>
+<script src="{% static 'mypage/mypage.js'%}"></script>
+
+{%endblock%}
+
+

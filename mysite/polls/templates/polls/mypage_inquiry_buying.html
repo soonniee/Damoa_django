@@ -1,0 +1,231 @@
+
+{% extends 'polls/nav.html' %}
+
+{%block home%}
+  <li class="nav-item"><a href="/polls/home/all" class="nav-link">Home</a></li>
+  <li class="nav-item"><a href="/polls/home/auction" class="nav-link">Auction</a></li>
+{%endblock%}
+{% block navbar %}
+{% if id %}
+
+  <ul class="nav bg-secondary">
+  <li style = "text-align:center; color:black; margin-top:8px;" class="nav-item-top">
+   Welcome   {{id}}
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/mypage/seller">MyPage</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/index/all">Logout</a>
+  </li>
+</ul>
+
+{% else %}
+
+  <ul class="nav bg-secondary">
+  <li class="nav-item-top">
+    <a class="nav-link active" href="#">Damoa First?</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/login">Login</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/signup">Sign Up</a>
+  </li>
+</ul>
+
+{% endif %}
+
+
+{% endblock %}
+{%block mypage%}
+{%load static%}
+<link rel="stylesheet" href="{% static 'mypage/mypage_report.css'%}">
+<div class = "mypage-container">
+    <div>
+        <div class="sidenav">
+        <div style="padding-top:30px;padding-top:15px;font-size:35px;padding-bottom:20px;text-align:left; margin-left:6px;"><strong>MyPage</strong></div>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Selling</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/seller">- Registered Products</a>
+        <br>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Buying</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/shoppinglist">- Shopping List</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/wish">- Wish List</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/cart">- Cart <span style="font-size: 13px;">(Buy Now)</span></a>  
+        <br>
+        <h3 style="text-align:left; margin-left:20px;"><strong>Services</strong></h3>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/report">- Report Contents</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/inquiry/buying">- 1:1 Inquiry (Buying)</a>
+        <a style="text-align:left; margin-left:20px;"href="/polls/mypage/inquiry/selling">- 1:1 Inquiry (Selling)</a>
+      </div>
+    </div>
+    <div class="product-container">
+    {%block mypage_product_title%}
+        <div style="height:45px; padding-bottom:40px;border-bottom: 3px solid; width:100%; display:block;">
+            <span><strong style="font-size:32px; padding-right:50px;">Services</strong><span style="color:blue;">1:1 Inquiry (Buying)</span></span>
+        </div>
+    {%endblock%}
+        <div class="product-card">
+        {%for inquiry in inquiry%}
+        
+        <div style="margin-left:10px;width:660px">
+        <h5 style="font-weight:600">1:1 Inquiry{%if inquiry.reply == 1 %}<span style="margin-left:10px"> <a style="color:red;font-size:15px"href="#"data-toggle="modal" data-target="#exampleModal{{inquiry.id}}">( Answer Completed )</a></span>{%else%}<span style="font-size:15px;color:blue;margin-left:10px">( Answer in Progress... )</span>{%endif%}</h5>
+        <div class="modal fade" id="exampleModal{{inquiry.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 style=" font-weight:600"class="modal-title" id="exampleModalLongTitle">Reply Content</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            
+                                                <table style="width:465px; font-weight:600"class="table table-bordered">
+                                
+                                                    <tbody>
+                                                    <tr>
+                                                        <th style="width:135px"scope="row"><span style="font-size:16px;font-weight:600">Product ID</span></th>
+                                                        <td>{{inquiry.prod_id_id}}</td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row"><span style="font-size:16px;font-weight:600">Product Name</span></th>
+                                                        <td>{{inquiry.prod_name}}</td>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row"><span style="font-size:16px;font-weight:600">Title</span></th>
+                                                        <td>Re)   {{inquiry.title}}</td>
+                                                        
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <th scope="row"><span style="font-size:16px;font-weight:600">Content</span></th>
+                                                        <td>{{inquiry.reply_content}}</td>
+                                                        
+                                                    </tr>
+                                                    
+                                                    
+                                                    </tbody>
+                                                    
+                                                </table>
+                                            
+                                        
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                <table style="width:660px;font-weight:600"class="table table-bordered">
+                                
+                                <tbody>
+                                <tr>
+                                    <th ><span style="font-weight:600">Product ID</span></th>
+                                    
+                                    <td style="width:500px"><a href="#"data-toggle="modal" data-target="#exampleModalCenter{{inquiry.prod_id_id}}">{{inquiry.prod_id_id}}</a></td>
+                                    {%for my_product in my_product%}
+                                    {%if inquiry.prod_id_id == my_product.prod_id%}
+                                    <div class="modal fade" id="exampleModalCenter{{inquiry.prod_id_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Product Info</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <div class="card" style="box-shadow: 0 4px 8px 0 powderblue;border-bottom-right-radius:20px; border-bottom-left-radius:20px;width : 270px;height:430px">
+                                                <img src="{{ my_product.img.url }}" alt="Denim Jeans" style="width:100%; height:220px;"/>
+                                                <div class="card-body">
+                                                <div>
+                                                    <span style="font-size: 18px;font-weight: 500; float:up;"class="card-title" >{{my_product.prod_name}}</span>
+                                                    <span style="font-size:12px; color:grey; float:right">{{my_product.likey}}</span>
+                                                    <i id="icon-{{my_product.prod_id}}"style="color:red; float:right; padding-top : 5px;padding-right:5px"class="far fa-heart fa-1x"></i>
+                                                    
+                                                    
+                                                </div>
+                                                {%if my_product.sold %}
+                                                <span class="card-text"style ="color: red;" id="sold">Sold Out  </span>
+                                                {% else %}
+                                                <span class="card-text"style ="margin-right:5px;color: red;" id="bidding">Bidding...  </span>
+                                                {% endif %}
+                                                <span class="card-text"aligh="right" class="price"style ="color: grey"> {{my_product.current_price}} $</span>
+                                                
+                                                <div style="font-size: 12px; font-weight: 500;"class="card-text" id="place">{{my_product.place}}</div>
+                                                <div style="font-size: 13px; font-weight: 400;"class="card-text" style="padding-bottom:10px" id="phone">{{my_product.phone}}</div>
+                                                <div style="font-size:13px;font-weight: 400;"class="card-text"aligh="right" class="price"> Start : {{my_product.bid_start}}</div>
+                                                <div style="font-size:13px;font-weight: 400;"class="card-text"aligh="right" class="price">/ End : {{my_product.bid_end}}</div>
+                                                <button style="font-size: 15px;background-color:black; width: 100%; margin-top:10px;border:0;border-radius:20px; color:white"id="history" data-toggle="modal" data-target="#exampleModalCenter{{my_product.prod_id}}"><span style="padding-right:10px">Auction History</span><i class="fa fa-history"></i></button>
+                                            </div>
+                                            
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    {%endif%}
+                                    {%endfor%}
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Product Name</span></th>
+                                    <td style="width:500px">{{inquiry.prod_name}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Seller ID</span></th>
+                                    <td style="width:500px">{{inquiry.seller}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Title</span></th>
+                                    <td style="width:500px">{{inquiry.title}}</td>
+                                    
+                                  </tr>
+                                  
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Content</span></th>
+                                    <td style="width:500px;height:100%">{{inquiry.content}}</td>
+                                    
+                                  </tr>
+                                  
+                                  
+                                </tbody>
+                                
+                              </table> 
+                                      
+                                       
+                                        
+                                       
+                                         
+        </div>
+      
+        
+        {%endfor%}
+            
+    
+        </div>
+    </div>
+   
+</div>
+<div class="footer">
+      <div style="width:1450px;margin: 0 auto"class="footer-container">
+        <div style="display:flex;margin-bottom:5px;justify-content:space-between"class="footer-top">
+          <div class="web-logo" style="padding-top:10px;font-size:28px;">DAMOA<i style="color:skyblue" class="fab fa-opencart"></i></div>
+          
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top: 2px solid rgba(255, 255, 255, 0.1);"class="footer-bottom">
+          <div style="margin-top:5px;font-size:15px;display:inline-block;vertical-align:center">Copyright &copy; 2020 All rights reserved </div>
+          <div style="margin-top:2px"><i class="fab fa-facebook-square fa-2x"></i>
+          <i style="margin-left:10px" class="fab fa-google-plus-square fa-2x"></i>
+          <i style="margin-left:10px;margin-right:5px" class="fab fa-instagram fa-2x"></i></div>
+        </div>
+        
+      </div>
+      
+    </div>
+{% comment %} <script src="{% static 'mypage/mypage.js'%}"></script> {% endcomment %}
+
+{%endblock%}
+
+

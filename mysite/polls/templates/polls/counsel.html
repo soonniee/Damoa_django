@@ -1,0 +1,165 @@
+
+{% extends 'polls/nav.html' %}
+
+{%block home%}
+  <li class="nav-item"><a href="/polls/home/all" class="nav-link">Home</a></li>
+  <li class="nav-item"><a href="/polls/home/auction" class="nav-link">Auction</a></li>
+{%endblock%}
+{% block navbar %}
+{% if id %}
+
+  <ul class="nav bg-secondary">
+  <li style = "text-align:center; color:black; margin-top:8px;" class="nav-item-top">
+   Welcome   {{id}}
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/mypage/seller">MyPage</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/index/all">Logout</a>
+  </li>
+</ul>
+
+{% else %}
+
+  <ul class="nav bg-secondary">
+  <li class="nav-item-top">
+    <a class="nav-link active" href="#">Damoa First?</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/login">Login</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/signup">Sign Up</a>
+  </li>
+</ul>
+
+{% endif %}
+
+{% endblock %}
+{%block product%}
+
+
+
+
+{%load static%}
+<link rel="stylesheet" href="{% static 'counsel/counsel.css'%}">
+<div class = "home-container">
+    <div id ="myBtnContainer"style="height:45px; padding-bottom:10px;border-bottom: 3px solid; width:100%; display:block;">
+        <span><strong style="font-size:32px; padding-right:50px;">1:1 Inquiry</strong><span style="color:blue;">{{my_product.prod_name}}</span></span>
+    </div>
+    <div class="home-card">
+        <div class="card" style="border-bottom-right-radius:20px; border-bottom-left-radius:20px;width:270px;height:465px">
+                <img src="{{ my_product.img.url }}" alt="Denim Jeans" style="width:100%; height:220px;"/>
+                <div class="card-body">
+                  <div style="item-align:center">
+                    <span style="font-size: 18px;font-weight: 500;float:up;"class="card-title" >{{my_product.prod_name}}</span>
+                    <span style="font-size:12px; color:grey; float:right">{{my_product.likey}}</span>
+                    <i id="icon-{{my_product.prod_id}}"style="color:red; float:right; padding-top : 5px;padding-right:5px"class="far fa-heart fa-1x"></i>
+                    
+                    
+                  </div>
+                
+                <span style="color:grey;font-size:15px;"class="card-text"aligh="right" class="price"> Start : {{my_product.price}} $</span>
+                <span style="font-size:14px;font-weight: 400;"class="card-text"aligh="right" class="price"> / Bid unit : {{my_product.bid_unit}} $</span>
+                <div style="font-size:12px;font-weight: 550;"class="card-text" id="place">{{my_product.place}}</div>
+                <div style="font-size:14px;font-weight: 500;"class="card-text" style="padding-bottom:10px" id="phone">{{my_product.seller}} / {{my_product.phone}}</div>
+                <div style="font-size:14px;font-weight: 400;"class="card-text"aligh="right" class="price"> Start : {{my_product.bid_start}}</div>
+                <div style="font-size:14px;font-weight: 400;"class="card-text"aligh="right" class="price">/ End : {{my_product.bid_end}}</div>
+                
+                  
+                <div style="padding-top:20px;">
+                {%if not my_product.sold %}
+                    <div style="display: inline-block">
+                      <button type="button" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled>Bidding</button>
+                    </div>
+                {% else %}
+                    <div style="display: inline-block">
+                      <button type="button" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled>Bidding</button>
+                    </div>
+                  {% endif %}
+                  {%if not my_product.now %}
+                    <div style="display: inline-block">
+                      <button type="button" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-primary"disabled><span>Buy Now  </span><span style="font-size: 15px">$ {{my_product.now_price}}</span></button>
+                    </div>
+                  {% else %}
+                  
+                  <div style="display: inline-block">
+                    <button type="button" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;"class="btn btn-primary" disabled><span>Buy Now  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                  
+                  </div>
+                  {% endif %}
+                
+                </div>
+              </div>
+            </div>
+            <div>
+        <form style="display: inline-block;" action=""method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            <div>
+                                <h5 style="font-weight:600">1:1 Inquiry</h5>
+                            </div>
+                              
+                            <div style="width:700px">
+                <table style="width:700px; font-weight:600"class="table table-bordered">
+                                
+                                <tbody>
+                                <tr>
+                                    <th scope="row"><span style="font-weight:600">Product ID</span></th>
+                                    <td>{{my_product.prod_id}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Product Name</span></th>
+                                    <td>{{my_product.prod_name}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Seller ID</span></th>
+                                    <td>{{my_product.seller}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Title</span></th>
+                                    <td><input style="font-weight:600;width:500px; border:1px solid #dbdbdb; border-radius:.25rem;line-heigh:1.42"type="text"  name="inquiry_title"></td>
+                                    
+                                  </tr>
+                                  
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:600">Content</span></th>
+                                    <td><textarea style="font-weight:600;width:500px; height:200px;border:1px solid #dbdbdb; border-radius:.25rem;line-heigh:1.42"type="text"  name="inquiry_content"></textarea></td>
+                                    
+                                  </tr>
+                                  
+                                  
+                                </tbody>
+                                
+                              </table>
+                                
+                                        
+                                        <button style="display: inline-block;float:right;" type="submit" style="padding: 10px 14px; width: 100%; opacity: 0.9;" name="inquiry_product" value="{{my_product.prod_id}}" class="btn btn-danger" onclick="return confirm('Complete 1:1 문의?')">Complete</button>
+                                        </form>
+                                         
+            </div>
+                         </div> 
+      </div>
+    </div>
+          <div class="footer">
+      <div style="width:1450px;margin: 0 auto"class="footer-container">
+        <div style="display:flex;margin-bottom:5px;justify-content:space-between"class="footer-top">
+          <div class="web-logo" style="padding-top:10px;font-size:28px;">DAMOA<i style="color:skyblue" class="fab fa-opencart"></i></div>
+          
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top: 2px solid rgba(255, 255, 255, 0.1);"class="footer-bottom">
+          <div style="margin-top:5px;font-size:15px;display:inline-block;vertical-align:center">Copyright &copy; 2020 All rights reserved </div>
+          <div style="margin-top:2px"><i class="fab fa-facebook-square fa-2x"></i>
+          <i style="margin-left:10px" class="fab fa-google-plus-square fa-2x"></i>
+          <i style="margin-left:10px;margin-right:5px" class="fab fa-instagram fa-2x"></i></div>
+        </div>
+        
+      </div>
+      
+    </div>                  
+{%endblock%}
+{%block register%}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'polls/head.html' %}
+
+{% block content %}
+{%load static%}
+<link rel="stylesheet" href="{% static 'polls/signup.css'%}">
+      <div class="signup-wrapper">
+        <div class="member-header">
+            <h1 class="member-logo" style="text-align:center; margin-top: 80px;">
+                <a href="/polls/index" style="color:black;">
+                    DAMOA<i style="color:skyblue" class="fab fa-opencart"></i>
+                </a>
+            </h1>
+        </div>
+        {% comment %} <div class="social-login">
+            <span class="naver-login">
+                <button class='btn-social-login' style='background:#1FC700'><i class="xi-2x xi-naver"></i></button><span style="padding:5px;">Login with Naver Account</span>
+            </span><br><br>
+            <span class="google-login">
+                <a href="/polls/account/login/kakao"><button class='btn-social-login' style='background:#FFEB00'><i class="xi-2x xi-kakaotalk text-dark"></i></button><span style="padding:5px;">Login with Kakao Account</span></a>
+            </span>
+        </div> {% endcomment %}
+       
+        <div style="padding-top:60px"class="local-login">
+            <form method="post" action="">
+            {% csrf_token %}
+                <h2>Login Form</h2>
+                <div class="input-container">
+                  <i class="fa fa-user icon"></i>
+                  <input class="input-field" type="text" placeholder="ID" name="userid">
+                </div>
+
+
+
+                <div class="input-container">
+                  <i class="fa fa-key icon"></i>
+                  <input class="input-field" type="password" placeholder="Password" name="password">
+                </div>
+                 {% if error%}{{error}}{% endif %}
+                <button type="submit" class="btn">Login</button>
+              </form>
+        </div>
+        </div>
+ {% endblock %}

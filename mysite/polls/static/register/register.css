@@ -1,0 +1,14 @@
+.footer{
+    
+    height:100px;
+    background-color: #565b61;
+    color:white;
+    width:100%;
+    margin-top:20px;
+    padding-bottom: 10px;
+    text-align:center;
+  }
+  .register-container{
+      display: grid;
+      grid-template-rows: 1fr 100px;
+  }

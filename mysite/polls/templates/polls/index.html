@@ -1,0 +1,195 @@
+
+{% extends 'polls/nav.html' %}
+{%load custom_tags%}
+{%block home%}
+  <li class="nav-item"><a href="/polls/index/all" class="nav-link">Home</a></li>
+  <li class="nav-item"><a href="/polls/index/auction" class="nav-link">Auction</a></li>
+{%endblock%}
+{% block navbar %}
+
+
+  <ul class="nav bg-secondary">
+  <li class="nav-item-top">
+    <a class="nav-link active" href="#">Damoa First?</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/login">Login</a>
+  </li>
+  <li class="nav-item-top">
+    <a class="nav-link" href="/polls/signup">Sign Up</a>
+  </li>
+</ul>
+
+
+
+{% endblock %}
+{%block product%}
+
+
+
+
+{%load static%}
+<link rel="stylesheet" href="{% static 'home/home.css'%}">
+<div class = "home-container">
+  <div style="display:inline-block"class="filter-container">
+    <form method="post">{% csrf_token %}
+        
+        <button value="{{category}}"type="submit" name="latest"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Latest<span style="font-size:13px"> (최신순)</span></button>
+        <button value="{{category}}"type="submit" name="hot"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Hot<span style="font-size:13px"> (인기순)</span></button>
+        <button value="{{category}}"type="submit" name="last"style="outline:none;font-weight:700;color:black;font-size:18px;text-decoration:underline;margin-right:25px;border:0;background-color:white">Last Minute<span style="font-size:13px"> (마감 임박순)</span></button>
+    </form>
+  </div>
+  <div class="filter-display-container">
+      <span style="font-size:18px;color:red">{{filter_display}}</span>
+    </div>
+  <div class="search-container">
+            <div class="sidenav">
+            <form action="" method="post" class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+            <h3 style="text-align:left; padding-top:50px;padding-bottom:15px;margin-left:20px;font-weigth:bolder;"><strong>Search</strong></h3>
+            <h6 style="text-align:left; padding-bottom:15px;margin-left:20px;font-weigth:bolder;"><strong>Category : <span style="color:blue;margin-left:6px;font-size:18px">{{category}}</span></strong></h6>
+            <h6 style="text-align:left; margin-left:20px;font-weigth:bolder;"><strong>Seller</strong></h6>
+            <input style="border-radius:3px;border:1.5px solid;width:150px;margin-left:20px;margin-bottom:20px"type="text" name="seller_search" placeholder="Seller">
+            <h6 style="text-align:left; margin-left:20px;font-weigth:bolder;"><strong>Product Name</strong></h6>
+            <input style="border-radius:3px;border:1.5px solid;width:150px;margin-left:20px;margin-bottom:20px"type="text" name="product_search" placeholder="Product Name">
+            <h6 style="text-align:left; margin-left:20px;font-weigth:bolder"><strong>Price</strong></h6>
+            <select style="border-radius:3px;border:1.5px solid;height:30px;margin-left:20px;width:150px;"name="price_search">
+                        <option value = "0" hidden>Price</option>
+                        <option value = "1" >0 ~ 50$</option>
+                        <option value="2">50 ~ 100$</option>
+                        <option value="3">100 ~ 500$</option>
+                        <option value="4">500 ~ 1000$</option>
+                        <option value="5">1000 ~ 5000$</option>
+                        <option value="6">5000$ ~</option>
+                      </select>
+            <button name="search" value="{{category}}"style="float:right;margin-right:30px;margin-top:20px;padding: 4px 6px; width: 80px; opacity: 0.9;"class="btn btn-dark">Search</button>
+            
+            </div>
+        </div>
+    <div id="myBtnContainer">
+      
+      {%if category == 'All'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" id="All"name="All" value="All"> All</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" id="All"name="All" value="All"> All</button>
+      {%endif%}
+      {%if category == 'IT'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" id="IT"name="IT"value="IT"> IT Device</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" id="IT"name="IT"value="IT"> IT Device</button>
+      {%endif%}
+      {%if category == 'Clothes'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Clothes"value="Clothes"> Clothes</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Clothes"value="Clothes"> Clothes</button>
+      {%endif%}
+      {%if category == 'Shoes'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Shoes"value="Shoes"> Shoes</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Shoes"value="Shoes"> Shoes</button>
+      {%endif%}
+      {%if category == 'Books'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Books"value="Books"> Books</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Books"value="Books"> Books</button>
+      {%endif%}
+      {%if category == 'Furniture'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Furniture"value="Furniture"> Furniture</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Furniture"value="Furniture"> Furniture</button>
+      {%endif%}
+      {%if category == 'Etc'%}
+      <button style="font-weight:600;margin-right:8px"class="category active" name="Etc"value="Etc"> Etc</button>
+      {%else%}
+      <button style="font-weight:600;margin-right:8px"class="category" name="Etc"value="Etc"> Etc</button>
+      {%endif%}
+      </form>
+      
+      
+      
+      
+      
+   
+    
+    </div>
+    <div class="home-card">
+
+      
+      {%for list in prod%}
+          {% realtime as start_check%}
+      
+          {%if list.seller != id and list.bid_start < start_check%}
+          <div class="card" style="box-shadow: 0 4px 8px 0 powderblue;border-bottom-right-radius:20px; border-bottom-left-radius:20px;width : 300px; height:450px">
+            
+            <img src="{{ list.img.url }}" style="width:100%; height:220px;"/>
+            
+            <div class="card-body">
+            <div>
+              <span style="font-size: 18px;font-weight: 500;">{{list.prod_name}}</span><span id="count-{{ list.prod_id }}"style="font-size:12px; color:grey; float:right">{{list.likey}}</span>
+              <!-- <form method="post">
+                {% csrf_token %} -->
+                <button name="press-unlike" style="float:right;border:none;outline:none;background-color: white;" id="{{list.prod_id}}" class="btn-like">
+                  <i id="icon-{{list.prod_id}}"style="color:grey"class="far fa-heart fa-1x"></i>
+                </button>
+              <!-- </form> -->
+            </div>
+            <div>
+            {%if list.sold %}
+              <span style ="color: red;font-size: 15px;" class="sold">Sold Out  </span>
+              {% else %}
+              <span style ="margin-right:5px;color: red;font-size: 15px;" class="sold">Bidding...  </span>
+            {% endif %}
+            <span aligh="right" class="price"> {{list.current_price}} $</span>
+            </div>
+            <div style="font-size: 12px; font-weight: 400;"class="place">{{list.place}}</div>
+            <div style="font-size: 14px; font-weight: 500;"class="seller">{{list.seller}} / {{list.phone}}<span style="float:right; color: red"><a style="float:right; color: red" href="/polls/login">Report</a></span></div>
+            <div style="background-color:black; margin-top:10px;width: 230px; border:0;border-radius:10px; color:white"id="end_date"><i style="margin-left:5px;margin-right:5px;"class="fa fa-history fa-1x "></i><span style="font-weight:500;font-size:15px">{{list.bid_end}}</span></div>
+            
+                <div style="padding-top:20px;width:100%">
+                  {%if not list.sold %}
+                    <div style="display: inline-block">
+                      <form style="display: inline-block;" action=""method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" style="font-size:15px;padding: 8px 10px; width: 100%; opacity: 0.9;" name="bidding" value="{{list.prod_id}}" class="btn btn-secondary">Bidding</button>
+                        
+                      
+                      
+                    </div>
+                    
+                    
+                  {% else %}
+                    <div style="display: inline-block">
+                      <button type="button" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"class="btn btn-secondary" disabled><span>Bidding  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                    </div>
+                  {% endif %}
+                  {%if not list.sold and not list.now %}
+                    <div style="display: inline-block">
+                      <button type="submit" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"name="buy_now" value="{{list.prod_id}}"class="btn btn-primary"onclick="return confirm('Buy Product?')"><span>Buy Now  </span><span style="font-size: 15px">$ {{list.now_price}}</span></button>
+                    </div>
+                  {% else %}
+                  
+                  <div style="display: inline-block">
+                    <button type="button" style="font-size:15px;padding: 8px 8px; width: 100%; opacity: 0.9;"class="btn btn-primary" disabled><span>Buy Now  </span><i style="padding-left:5px; color:red"class="fas fa-times"></i></button>
+                  
+                  </div>
+                  
+                  {% endif %}
+                  {%if not list.sold and not list.now %}
+                  <div style="display: inline-block">
+                      <button type="submit" style="padding: 6px 6px; width: 100%; opacity: 0.9;"name="add_cart" value="{{list.prod_id}}"class="btn btn-danger"onclick="return confirm('Add to Cart?')"><i style="color:white"class="fas fa-cart-plus fa-1x"></i></button>
+                    </div>
+                    {% endif %}
+                    </form>
+                </div>
+               
+            
+          </div>
+        </div>
+        {%endif%}
+        {%endfor%}
+        </div>
+      </div>
+       
+        
+<script src="{% static 'home/home.js'%}"></script>
+{%endblock%}

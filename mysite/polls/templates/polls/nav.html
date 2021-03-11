@@ -1,0 +1,74 @@
+{% extends 'polls/head.html' %}
+{% block content %}
+{% block navbar%}
+{%endblock%}
+<nav style="padding-bottom:25px;"class="navbar navbar-expand-sm navbar-light bg-light mb-3">
+    <!-- <div class="container"> -->
+        <div class="navbar-brand" style="padding-left:100px;padding-right:100px;padding-top:25px;font-size:28px;">DAMOA<i style="color:skyblue" class="fab fa-opencart"></i></div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          {%block home%}
+            
+          {%endblock%}
+          
+          <li class="nav-item"><a href="/polls/register_product" class="nav-link">Register Products</a></li>
+          <!-- <li class="nav-item"><a href="/polls/mypage/report" class="nav-link">Services</a></li> -->
+        </ul>
+        
+            <!-- <form action="" method="post" class="form-inline my-2 my-lg-0">
+              {% csrf_token %}
+              <div class="hiddenCB">
+
+                  {%if error%}<script>alert('{{error}}')</script>{%endif%}
+    
+                  <table>
+                  <tr>
+                    <td><input type="checkbox" name="choice1" id="cb1" /><label for="cb1">Seller</label></td>
+                    <td><input style="width:180px;"type="text" class="form-control" name="seller_search" placeholder="Seller"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="choice2" id="cb2" /><label for="cb2">Product</label></td>
+
+                    <td><input style="width:180px;"type="text" class="form-control" name="product_search" placeholder="Product Name"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="choice3" id="cb3" /><label for="cb3">Price</label></td>
+
+                    <td><select style="margin-top:10px;margin-left:30px;width:180px;"class="custom-select" name="price_search">
+                      <option value = "0" hidden>Price</option>
+                      <option value = "1" >0 ~ 50$</option>
+                      <option value="2">50 ~ 100$</option>
+                      <option value="3">100 ~ 500$</option>
+                      <option value="4">500 ~ 1000$</option>
+                      <option value="5">1000 ~ 5000$</option>
+                      <option value="6">5000$ ~</option>
+                    </select></td>
+                    <td><button name="search" value="{{category}}"style="margin-left:10px;margin-top:10px;padding: 6px 8px; width: 100%; opacity: 0.9;"class="btn btn-primary">Search</button>
+                  </tr>
+
+
+              </table>
+
+              </div> -->
+
+
+            <!-- </form> -->
+          <!-- <span> -->
+      </div>
+
+    <!-- </div> -->
+
+  </nav>
+  {%block mypage%}
+    {%block mypage_product_title%}
+    {%endblock%}
+  {%endblock%}
+  {%block product%}
+  {%endblock%}
+  {%block register%}
+  {%endblock%}
+  {%endblock%}
+

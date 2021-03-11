@@ -1,0 +1,77 @@
+{% extends 'polls/head.html' %}
+
+{%block content%}
+
+
+
+
+{%load static%}
+<link rel="stylesheet" href="{% static 'admin/admin_edit.css'%}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c85d62c8b6.js"></script>
+<div class = "home-container">
+ <div class="admin-title">
+      <div style="padding:10px;background-color: dodgerblue;"><h3 style="color:white">User Management<h3></div>
+    </div>
+    <div id="myBtnContainer">
+     <div style="height:38px;padding-bottom:10px;border-bottom: 3px solid; width:100%; display:block;">
+            <span><strong style="font-weight:400;font-size:24px; padding-left:10px;padding-right:20px;">Admin > <span style="font-size:18px">Edit</span></strong><span style="color:blue;font-size:15px">(User : {{userinfo.user_id}})</span></span>
+        </div>
+    
+    </div>
+    
+        <div class="home-card">
+        
+        
+        <div style="margin-left:10px;width:500px">
+        <h5 style="font-weight:400">UserInfo</h5>
+        <form method="post" action="">{% csrf_token %}
+                <table style="width:500px; font-weight:500"class="table table-bordered">
+                                
+                                <tbody>
+                                <tr>
+                                    <th style="width:180px"scope="row"><span style="font-weight:400">Username</span></th>
+                                    
+                                    <td style="width:300px">{{userinfo.user_name}}</button></td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">UserID</span></th>
+                                    <td>{{userinfo.user_id}}</td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Email</span></th>
+                                    <td>{{userinfo.email}}</div></td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Reported Counts</span></th>
+                                    <td><a style="color:red"href="/polls/admin/report/{{userinfo.user_id}}">{{userinfo.report_count}}</a></td>
+                                    
+                                  </tr>
+                                  <tr>
+                                    <th scope="row"><span style="font-weight:400">Confirm Reported</span></th>
+                                    <td><input style="width:80px; height:30px;border:1px solid #dbdbdb; border-radius:.25rem;line-height:2"type="text"  name="confirm_count"></td>
+                                    
+                                  </tr>
+                                  
+                                  
+                                </tbody>
+                                
+                              </table> 
+                                     <button style="float:right;padding:4px 12px;" class="btn btn-dark" name = "editID" value = "{{userinfo.user_id}}"><span>Edit</span></button>   
+                             </form>            
+        </div>
+        
+        
+        
+        </div>
+       
+
+{%endblock%}
